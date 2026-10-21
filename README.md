@@ -2,6 +2,38 @@
 
 Dự án độc lập thực hiện quy trình trong đề bài: dữ liệu ảnh → CNN/transfer learning → GWO tối ưu siêu tham số → so sánh baseline → đánh giá và Grad-CAM. Không liên quan tới kho hỏi–đáp y tế trước đó.
 
+## Ảnh mẫu và chạy demo ngay
+
+Sau khi cài thư viện ở bước 1, chạy một lệnh để tạo 40 ảnh lá minh họa, huấn luyện CNN/GWO và dự đoán một ảnh:
+
+```bash
+python demo.py
+```
+
+Ảnh mẫu **được vẽ tổng hợp**, không phải ảnh lá bệnh thật và không dùng để công bố độ chính xác nhận diện bệnh. Hai lớp có tên `synthetic_plain` / `synthetic_spotted`.
+
+| Lá minh họa không đốm | Lá minh họa có đốm |
+|---|---|
+| ![Ảnh tổng hợp không đốm](docs/demo/plain.png) | ![Ảnh tổng hợp có đốm](docs/demo/spotted.png) |
+
+Demo lưu ảnh đầu vào vào `runs/demo/images/`, mô hình và biểu đồ vào `runs/demo/results/`, ảnh Grad-CAM của lần dự đoán vào `runs/demo/prediction_gradcam.png`. Chạy lại bằng thư mục mới, ví dụ `python demo.py --output runs/demo2`.
+
+Dự đoán lại bằng ảnh mẫu có sẵn sau khi chạy demo:
+
+```bash
+python predict.py --checkpoint runs/demo/results/gwo_42.pt --image docs/demo/spotted.png
+```
+
+Ảnh Grad-CAM được tạo từ lần chạy demo thực tế (không phải kết quả trên PlantVillage):
+
+![Grad-CAM trên ảnh tổng hợp](docs/demo/gradcam.png)
+
+Đường hội tụ GWO trong lần chạy demo:
+
+![Đường hội tụ trên dữ liệu tổng hợp](docs/demo/gwo.png)
+
+Để dùng ảnh lá thật, huấn luyện trên bộ dữ liệu thật ở bước 2–3, sau đó chạy `predict.py --image DUONG_DAN_ANH` với checkpoint tương ứng. Checkpoint demo chỉ học phân biệt hình tổng hợp.
+
 ## 1. Cài môi trường
 
 Khuyến nghị Python 3.10–3.12:
